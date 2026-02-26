@@ -1,0 +1,28 @@
+# original script from https://wiki.archlinux.org/index.php/Dunst
+# <alexforsale@yahoo.com>
+# changeBrightness
+
+# Arbitrary but unique message tag
+msgTag="mybrightness"
+
+# Change the volume using alsa(might differ if you use pulseaudio)
+#amixer -c 0 set Master "$@" > /dev/null
+#pamixer --set-volume "${@}" > /dev/null
+brightnessctl set "${@}" > /dev/null
+
+# Query amixer for the current volume and whether or not the speaker is muted
+#volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
+#mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
+#volume="$(pamixer --get-volume-human)"
+#mute="$(pamixer --get-mute)"
+max="$(brightnessctl max)"
+current="$(brightnessctl get)"
+percentage="$(awk -v current=${current} -v max=${max} 'BEGIN { print ( (current / max) * 100 )}')"
+percentage="${percentage%.*}"
+
+# Show the brightness notification
+dunstify -a "changeBrightness" -u low -i sun -h string:x-dunst-stack-tag:$msgTag \
+    -h int:value:"${percentage}" "Brightness: ${percentage}%"
+
+# Play the brightness changed sound
+canberra-gtk-play -i audio-volume-change -d "changeVolume"

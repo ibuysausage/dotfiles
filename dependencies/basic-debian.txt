@@ -1,0 +1,14 @@
+exa
+git
+cmatrix
+zsh
+vim
+kitty
+ripgrep
+stow
+curl
+zsh
+fd-find
+build-essential
+
+ffmpeg 7zip jq poppler-utils imagemagick

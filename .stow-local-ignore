@@ -1,0 +1,12 @@
+# Git
+.git
+.gitignore
+
+# README
+README.md
+
+# Install script
+install.sh
+
+icons/
+hyprland/.config/dunst/brightness

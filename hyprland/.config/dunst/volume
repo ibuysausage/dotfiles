@@ -1,0 +1,37 @@
+# original script from https://wiki.archlinux.org/index.php/Dunst
+# <alexforsale@yahoo.com>
+# changeVolume
+
+msgTag="myvolume"
+
+# args = -i % or -d %
+pamixer "${@}" > /dev/null
+volume="$(pamixer --get-volume)"
+mute="$(pamixer --get-mute)"
+if [ "${mute}" == "true" ]; then
+    icon="volume-mute"
+    symbol=""
+elif [ "${mute}" == "false" ] &&
+         [ "${volume}" -gt 0 ] &&
+         [ "${volume}" -le 25 ]; then
+    icon="volume-low"
+    symbol=""
+elif [ "${mute}" == "false" ] &&
+         [ "${volume}" -gt 25 ] &&
+         [ "${volume}" -le 75 ]; then
+    icon="volume-medium"
+    symbol=""
+elif [ "${mute}" == "false" ] &&
+         [ "${volume}" -gt 75 ]; then
+    icon="volume-high"
+    symbol=""
+fi
+
+if [[ $volume == 0 || "$mute" == "true" ]]; then
+    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag "Volume muted"
+else
+    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag \
+    -h int:value:"$volume" "Volume: ${volume}%"
+fi
+
+canberra-gtk-play -i audio-volume-change -d "changeVolume"
