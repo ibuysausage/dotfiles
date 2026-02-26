@@ -28,8 +28,8 @@ extract_local_art() {
     echo ""
 }
 
-playerctl --player=spotify metadata --format '{{title}}|{{artist}}|{{mpris:artUrl}}' --follow |
-while IFS="|" read -r title artist arturl; do
+playerctl --player=spotify metadata --format '{{title}}|{{artist}}|{{mpris:artUrl}}|{{position}}|{{mpris:length}}' --follow |
+while IFS="|" read -r title artist arturl pos_raw len_raw; do
 
     img=""
 
@@ -50,14 +50,33 @@ while IFS="|" read -r title artist arturl; do
         fi
     fi
 
-    # --- Notification text style ---
-    message="<big><b>$title</b></big>\n$artist"
+    # --- Calculate Percentage and Format Time ---
+    percent=0
+    pos_fmt="0:00"
+    len_fmt="0:00"
 
+    if [[ -n "$len_raw" && "$len_raw" -gt 0 && -n "$pos_raw" ]]; then
+        # Calculate percentage for the bar
+        percent=$(( 100 * pos_raw / len_raw ))
+        
+        # Convert microseconds to seconds
+        pos_s=$(( pos_raw / 1000000 ))
+        len_s=$(( len_raw / 1000000 ))
+        
+        # Format to MM:SS
+        pos_fmt=$(printf "%d:%02d" $((pos_s/60)) $((pos_s%60)))
+        len_fmt=$(printf "%d:%02d" $((len_s/60)) $((len_s%60)))
+    fi
+
+    # --- Notification text style ---
+    # Added timestamps in italics below the artist
+    #message="<big><b>$title</b></big>\n$artist\n<i>$pos_fmt / $len_fmt</i>"
+    message="<b>$title</b>\n$artist ($pos_fmt / $len_fmt)"
     # --- SEND notification ---
     if [[ -n "$img" ]]; then
-        notify-send "" "$message" -i "$img" -u normal -h string:x-dunst-stack-tag:spotify
+        notify-send "" "$message" -i "$img" -u normal -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
     else
-        notify-send "" "$message" -u normal -h string:x-dunst-stack-tag:spotify
+        notify-send "" "$message" -u normal -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
     fi
 
 done
