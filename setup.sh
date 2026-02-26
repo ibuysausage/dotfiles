@@ -50,10 +50,10 @@ fi
 cd $HOME && git clone https://github.com/romkatv/powerlevel10k.git
 mkdir -p $HOME/.config/systemd/user/
 cp spotify-notify.service $HOME/.config/systemd/user/
-sudo systemctl --user daemon-reload
-sudo systemctl --user enable --now spotify-notify.service
-sudo systemctl --user enable spotify-notify.service
-sudo systemctl --user start spotify-notify.service
+systemctl --user daemon-reload
+systemctl --user enable --now spotify-notify.service
+systemctl --user enable spotify-notify.service
+systemctl --user start spotify-notify.service
 bash <(curl -sSL https://spotx-official.github.io/run.sh)
 
 
