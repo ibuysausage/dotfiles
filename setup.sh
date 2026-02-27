@@ -13,6 +13,9 @@ fi
 # Install basic deps
 sudo pacman -S $(cat dependencies/basic-arch.txt)
 
+# Install rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # Install JetBrainsMono NerdFont
 curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
 if [ ! -d "/usr/share/fonts/JetBrainsMono" ]; then
@@ -82,6 +85,9 @@ if [[ $hypr == "y" || $hypr == "Y" ]]; then
     mkdir build; cd build/
     cmake -G Ninja ..; sudo ninja && sudo ninja install
     systemctl enable ly@tty2.service; systemctl disable getty@tty2.service
+    rustup override set stable || exit -1; rustup update stable; git clone https://github.com/coffebar/waybar-module-pacman-updates.git /tmp/waybar-module-pacman-updates
+    pushd /tmp/waybar-module-pacman-updates && cargo build --release; sudo cp target/release/waybar-module-pacman-updates /usr/local/bin/
+    popd && rm -rf /tmp/waybar-module-pacman-updates 
 fi
 
 cd $HOME
