@@ -5,7 +5,7 @@ dotdir=`pwd`
 
 # Install hyprland deps
 read -p "Would you like to install hyprland?: (y/n) " hypr
-if [ $hypr == "y" || $hypr == "Y"]; then
+if [ $hypr == "y" || $hypr == "Y" ]; then
     yay -S $(cat dependencies/hyprland-arch.txt)
 fi
 
