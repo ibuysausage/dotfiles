@@ -1,6 +1,7 @@
 zip
 otf-font-awesome
 unzip
+pacman-contrib
 fastfetch
 exa
 yazi
