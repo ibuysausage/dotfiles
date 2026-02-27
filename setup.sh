@@ -111,6 +111,13 @@ if [[ $spotx == "y" || $spotx == "Y" ]]; then
     cd $HOME; bash <(curl -sSL https://spotx-official.github.io/run.sh)
 fi
 
+if [[ $hypr == "y" || $hypr == "Y" ]]; then
+    git clone https://codeberg.org/LGFae/awww.git /tmp/awww
+    pushd /tmp/awww; cargo build --release
+    sudo mv target/release/awww /usr/local/bin; sudo mv target/release/awww-daemon /usr/local/bin
+    popd
+fi
+
 clear
 echo "Done!"
 echo "To see effects close your terminal and open up kitty to see the effects"
