@@ -2,7 +2,7 @@
 Description=Spotify Track Change Notifications with Album Art
 
 [Service]
-ExecStart=/usr/bin/spotify-notify
+ExecStart=/usr/local/bin/spotify-notify
 Restart=on-failure
 
 [Install]

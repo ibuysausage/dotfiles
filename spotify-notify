@@ -74,9 +74,9 @@ while IFS="|" read -r title artist arturl pos_raw len_raw; do
     message="<b>$title</b>\n$artist ($pos_fmt / $len_fmt)"
     # --- SEND notification ---
     if [[ -n "$img" ]]; then
-        notify-send "" "$message" -i "$img" -u normal -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
+        notify-send "" "$message" -i "$img" -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
     else
-        notify-send "" "$message" -u normal -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
+        notify-send "" "$message" -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
     fi
 
 done
