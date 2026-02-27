@@ -14,7 +14,7 @@ fi
 sudo pacman -S $(cat dependencies/basic-arch.txt)
 
 # Install JetBrainsMono NerdFont
-curl -OLv https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
 if [ ! -d "/usr/share/fonts/JetBrainsMono" ]; then
     mkdir -p /usr/share/fonts/JetBrainsMono/
 fi
