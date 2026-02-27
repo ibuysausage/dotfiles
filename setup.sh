@@ -77,9 +77,27 @@ if [ $hypr == "y" ]; then
     else
         cd $HOME/Hyprland; git pull --force
     fi
+
     mkdir build; cd build/
     cmake -G Ninja ..; sudo ninja && sudo ninja install
+    systemctl enable ly@tty2.service; systemctl disable getty@tty2.service
 fi
 
+cd $HOME
+
+# Options
+read -p "Would you like to install the minegrub bootloader theme?: (y/n) " minegrub
+read -p "Would you like to install Spotify add block?: (y/n) " spotx
+
+if [ $minegrub == "Y" || $minegrub == "y" ]; then
+    git clone https://github.com/Lxtharia/double-minegrub-menu.git; cd double-minegrub-menu
+    sudo ./install.sh
+fi
+
+if [ $spotx == "y" || $spotx == "Y" ]; then
+    cd $HOME; bash <(curl -sSL https://spotx-official.github.io/run.sh)
+fi
+
+clear
 echo "Done!"
 echo "To see effects close your terminal and open up kitty to see the effects"
