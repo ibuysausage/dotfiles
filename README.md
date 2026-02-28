@@ -5,9 +5,9 @@
 
 ### Install
 > [!IMPORTANT]
-> Install script as of now only has arch support
+> setup script is ment for new arch machines</br>
+> As of now it only has arch support
 
-1. Make sure the install.sh script is execuatable
-2. Run the setup script `./setup.sh`
-This will install dependencies too</br>
+1. Run the setup script `./setup.sh`
+This will install dependencies too and backup current config</br>
 and thats it!
