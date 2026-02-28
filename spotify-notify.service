@@ -1,9 +1,0 @@
-[Unit]
-Description=Spotify Track Change Notifications with Album Art
-
-[Service]
-ExecStart=/usr/local/bin/spotify-notify
-Restart=on-failure
-
-[Install]
-WantedBy=default.target
