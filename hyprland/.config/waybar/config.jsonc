@@ -11,6 +11,8 @@
         "cpu",
         "memory",
         "disk",
+        "custom/weather",
+        "custom/spotify",
         "custom/updates"
     ],
     "modules-center": [
@@ -152,6 +154,17 @@
 			"suspend": "systemctl suspend",
 			"hibernate": "systemctl hibernate"
 		}
+    },
+    "custom/weather": {
+        "exec": "~/.config/waybar/weather.py waybar",
+        "restart-interval": 200,
+        "return-type": "json"
+    },
+    "custom/spotify": {
+        "format": "",
+        "on-click": "supertuxkart",
+        "tooltip": true,
+        "tooltip-format": "SuperTuxkart"
     },
     "custom/updates": {
     "format": "{} {icon}",
