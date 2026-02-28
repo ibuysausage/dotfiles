@@ -12,6 +12,7 @@
         "memory",
         "disk",
         "custom/weather",
+        "custom/btop",
         "custom/stk",
         "custom/updates"
     ],
@@ -164,7 +165,11 @@
         "format": "",
         "on-click": "supertuxkart",
         "tooltip": true,
-        "tooltip-format": "SuperTuxkart"
+        "tooltip-format": "SuperTuxKart"
+    },
+    "custom/btop": {
+        "format": "",
+        "on-click": "kitty -e btop"
     },
     "custom/updates": {
     "format": "{} {icon}",

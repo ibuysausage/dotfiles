@@ -102,11 +102,11 @@ cd $dotdir
 fc-cache -frv
 
 # Initlize config
-stow kitty --adopt
-stow vim --adopt
-stow zsh --adopt
-stow eza --adopt
-stow btop --adopt
+for dir in *; do
+    if [[ -d $dir && ! $dir == "dependencies" && ! $dir == "hyprland" && ! $dir == "release" ]]; then
+        stow $dir --adopt
+    fi
+done
 
 # Install icons for hyprland
 if [ $? == 0 ]; then

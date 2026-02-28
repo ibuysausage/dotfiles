@@ -162,7 +162,7 @@ configuration{
     display-drun: " ";
     display-run: " ";
     display-window: " ";
-
+    terminal: "/usr/bin/kitty";
     //adding vim keybindings
     kb-row-up: "Up,Control+k";
     kb-row-left: "Left,Control+h";
