@@ -104,6 +104,7 @@ fc-cache -frv
 # Initlize config
 for dir in *; do
     if [[ -d $dir && ! $dir == "dependencies" && ! $dir == "hyprland" && ! $dir == "release" ]]; then
+        echo "Applying config for $dir"
         stow $dir --adopt
     fi
 done
