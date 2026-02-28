@@ -156,6 +156,7 @@
     "custom/updates": {
     "format": "{} {icon}",
     "return-type": "json",
+    "on-click": "kitty @ new-window --hold --command 'paru --noconfirm'",
     "format-icons": {
         "has-updates": "",
         "updated": ""

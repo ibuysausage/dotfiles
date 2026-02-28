@@ -38,6 +38,8 @@ alias cmatrix="cmatrix -u 10 -B f"
 alias g="glow"
 alias vi="vim"
 alias tree="tree -ah -I '.git'"
+alias yeet='paru -Rcs'
+alias yay='paru'
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 export PATH="$HOME/.local/bin:$PATH"

@@ -4,7 +4,12 @@
 dotdir=`pwd`
 
 #Install gum
-sudo pacman -S gum
+sudo pacman -S gum --noconfirm
+
+# Instlall paru
+sudo pacman -S base-devel --noconfirm
+pushd $HOME; git clone https://aur.archlinux.org/paru.git
+cd paru/; makepkg -si; popd
 
 # Install hyprland deps
 clear
@@ -12,7 +17,7 @@ echo ""
 gum confirm "Would you like to install hyprland?"
 
 if [ $? == 0 ]; then
-    yay -S $(cat dependencies/hyprland-arch.txt) --noconfirm
+    paru -S $(cat dependencies/hyprland-arch.txt) --noconfirm
 fi
 
 # Install basic deps
