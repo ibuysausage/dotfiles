@@ -2,30 +2,18 @@
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: JetBrainsMono Nerd Font;
     font-size: 14px;
+    border: none;
     border-radius: 20px;
 }
 
 window#waybar {
-    background-color: transparent /*rgba(100, 130, 100, 0.5)*/;
-    border-bottom: none;/*3px solid rgba(100, 114, 125, 0.5);*/
+    background-color: transparent;
+    border-bottom: none;
     box-shadow: none;
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
 }
-
-window#waybar.hidden {
-    opacity: 0.2;
-}
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
 
 button {
     /* Use box-shadow instead of border so the text isn't offset */
