@@ -46,6 +46,7 @@ alias htop='btop'
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export TERMINAL=/usr/bin/kitty
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
