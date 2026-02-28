@@ -2,6 +2,8 @@
 
 TODO:</br>
 add spotify-notify.service
+ikd about keeping the 5px padd on top and bottom</br>
+finish the middle
 
 ### Install
 > [!IMPORTANT]
