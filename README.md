@@ -1,5 +1,9 @@
 ## My Dotfiles
 
+### NOTICE ###
+The archive folder will have old config</br>
+for stuff I don't currently use anymore
+
 > [!TIP]
 > All of your current config will be backed up in `backup/`
 

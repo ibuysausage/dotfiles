@@ -8,5 +8,9 @@ README.md
 # Install script
 install.sh
 
+# Other junk
 icons/
 hyprland/.config/dunst/brightness
+
+# switching to omp
+zsh/.p10k.zsh

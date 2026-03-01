@@ -4,9 +4,6 @@
 
 # Arch flexing
 fastfetch
-#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-#fi
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
@@ -19,12 +16,6 @@ zstyle :compinstall filename '/home/byte/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
-#source ~/powerlevel10k/powerlevel10k.zsh-theme
-#source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Oh my posh
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/omp.toml)"
@@ -47,7 +38,6 @@ alias top='btop'
 alias htop='btop'
 alias omp='oh-my-posh'
 
-#source ~/powerlevel10k/powerlevel10k.zsh-theme
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export TERMINAL=/usr/bin/kitty
