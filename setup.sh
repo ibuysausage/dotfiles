@@ -16,9 +16,8 @@ fi
 # Install hyprland deps
 clear
 echo ""
-gum confirm "Would you like to install hyprland?"
-
-if [ $? == 0 ]; then
+if gum confirm "Would you like to install hyprland?"; then
+    hypr=0
     paru -S $(cat dependencies/hyprland-arch.txt) --noconfirm
 fi
 
@@ -58,7 +57,7 @@ if [ -d $HOME/.config/btop ]; then
 fi
 
 # Backup hyprland config
-if [ $? == 0 ]; then
+if [ $hypr == 0 ]; then
     echo "I will ask you questions. If you don't use what I ask you about"
     echo "leave it blank. Make sure to specify FULL path ex(/home/user/.config/dunst)"
     sleep 4
@@ -118,7 +117,7 @@ for dir in *; do
 done
 
 # Install icons for hyprland
-if [ $? == 0 ]; then
+if [ $hypr == 0 ]; then
     stow hyprland --adopt
     if [ ! -d "/usr/share/icons/FontAwsome" ]; then
         sudo mkdir -p /usr/share/icons/FontAwesome; icons="/usr/share/icons/FontAwesome/"
@@ -138,7 +137,7 @@ cd $dotdir
 cp other/spotify-notify.service $HOME/.config/systemd/user/
 
 # Install arch wallapaper for hyprland
-if [ $? == 0 ]; then
+if [ $hypr == 0 ]; then
     if [ ! -d "$HOME/Pictures/Wallpapers"]; then
         mkdir -p $HOME/Pictures/Wallpapers/
     fi
@@ -159,7 +158,7 @@ systemctl --user enable spotify-notify.service; systemctl --user start spotify-n
 
 
 # Install Hyprland
-if [ $? == 0 ]; then
+if [ $hypr == 0 ]; then
     if [ ! -d "$HOME/Hyprland" ]; then
         git clone --recursive https://github.com/hyprwm/Hyprland; cd Hyprland/
     else
@@ -195,7 +194,7 @@ if [[ $spotx == "y" || $spotx == "Y" ]]; then
     cd $HOME; bash <(curl -sSL https://spotx-official.github.io/run.sh)
 fi
 
-if [ $? == 0 ]; then
+if [ $hypr == 0 ]; then
     git clone https://codeberg.org/LGFae/awww.git /tmp/awww
     pushd /tmp/awww; cargo build --release
     sudo cp target/release/awww /usr/local/bin; sudo cp target/release/awww-daemon /usr/local/bin
