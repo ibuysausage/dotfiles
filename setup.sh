@@ -8,9 +8,11 @@ sudo pacman -S gum --noconfirm
 pip install chardet lib3 datetime requests statistics urllib3 dulwich
 # Instlall paru
 sudo pacman -S base-devel --noconfirm
-pushd $HOME; git clone https://aur.archlinux.org/paru.git
-cd paru/; makepkg -si; popd
-
+$parustatus=`paru --version`
+if [[ ! -d $HOME/paru || $parustatus == 1 ]]; then
+    pushd $HOME; git clone https://aur.archlinux.org/paru.git
+    cd paru/; makepkg -si; popd
+fi
 # Install hyprland deps
 clear
 echo ""
