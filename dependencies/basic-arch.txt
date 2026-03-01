@@ -1,3 +1,4 @@
+tmux
 zip
 python3
 python-pip
