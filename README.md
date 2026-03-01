@@ -5,7 +5,9 @@ The archive folder will have old config</br>
 for stuff I don't currently use anymore
 
 > [!TIP]
-> All of your current config will be backed up in `backup/`
+> All of your current config will be backed up in `backup/`</br>
+> and the launch.sh waybar script will auto detect your motitor width
+> so everything fits! :D
 
 ### Install
 > [!IMPORTANT]
