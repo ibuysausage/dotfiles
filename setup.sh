@@ -5,7 +5,7 @@ dotdir=`pwd`
 
 #Install gum
 sudo pacman -S gum --noconfirm
-pip install chardet lib3 datetime requests statistics urllib3 dulwich
+pip install chardet lib3 datetime requests statistics urllib3 dulwich --break-system-packages
 # Instlall paru
 sudo pacman -S base-devel --noconfirm
 $parustatus=`paru --version`
