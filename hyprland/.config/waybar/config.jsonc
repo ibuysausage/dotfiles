@@ -14,7 +14,8 @@
         "custom/weather",
         "custom/btop",
         "custom/stk",
-        "custom/updates"
+        "custom/updates",
+        "custom/test"
     ],
     "modules-center": [
         "hyprland/workspaces"
@@ -156,11 +157,6 @@
 			"hibernate": "systemctl hibernate"
 		}
     },
-    "custom/weather": {
-        "exec": "~/.config/waybar/weather.py waybar",
-        "restart-interval": 200,
-        "return-type": "json"
-    },
     "custom/stk": {
         "format": "",
         "on-click": "supertuxkart",
@@ -170,6 +166,13 @@
     "custom/btop": {
         "format": "",
         "on-click": "kitty -e btop"
+    },
+    "custom/weather": {
+    "format": "{}",
+    "tooltip": true,
+    "interval": 600,
+    "exec": "/home/byte/Downloads/waybar-weather",
+    "return-type": "json"
     },
     "custom/updates": {
     "format": "{} {icon}",

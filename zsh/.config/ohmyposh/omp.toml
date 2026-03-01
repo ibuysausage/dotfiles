@@ -1,4 +1,4 @@
-console_title_template = '{{ .Shell }} in {{ .OS }} in {{ .PWD }}'
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
 version = 4
 final_space = true
 
@@ -12,6 +12,7 @@ final_space = true
   yellow = '#F3AE35'
   navyblue = '#123456'
   magenta = '#bb9af7'
+
 [upgrade]
  source = 'cdn'
   interval = '168h'
@@ -27,4 +28,13 @@ final_space = true
     style = 'plain'
     background = 'transparent'
     foreground = 'p:magenta'
-    template = "{{ .PWD }}"
+
+    [blocks.segments.properties]
+      style = 'full'
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    foreground = 'p:green'
+    background = 'transparent'
+    template = "❯"  
