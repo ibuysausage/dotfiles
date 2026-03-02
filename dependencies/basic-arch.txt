@@ -37,8 +37,6 @@ wireplumber
 qt5-wayland
 qt6-wayland
 waybar
-hyprpaper
 alsa-utils
 brightnessctl
 ly
-durdraw

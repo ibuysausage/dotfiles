@@ -3,26 +3,41 @@
 # Current dir
 dotdir=`pwd`
 
+# Update pkgs
+sudo pacman -Syu --noconfirm
+
 #Install gum
 sudo pacman -S gum --noconfirm
 pip install chardet lib3 datetime requests statistics urllib3 dulwich --break-system-packages
+
 # Instlall paru
-sudo pacman -S base-devel --noconfirm
+sudo pacman -S base-devel --noconfirm 
 $parustatus=`paru --version`
+
 if [[ ! -d $HOME/paru || $parustatus == 1 ]]; then
-    pushd $HOME; git clone https://aur.archlinux.org/paru.git
-    cd paru/; makepkg -si; popd
+    cd $HOME; git clone https://aur.archlinux.org/paru.git
+    cd paru/; makepkg -si; cd $dotdir
 fi
+
 # Install hyprland deps
 clear
 echo ""
 if gum confirm "Would you like to install hyprland?"; then
     hypr=0
-    paru -S $(cat dependencies/hyprland-arch.txt) --noconfirm
+    aurdeps=`cat dependencies/aur-arch.txt`
+    if [[ ! -f $HOME/.cache/aurdeps ]]; then
+	  paru -S $aurdeps --noconfirm
+      touch $HOME/.cache/aurdeps
+      paruinstall="YES"
+    else
+	  paru --noconfirm
+    fi
+
 fi
 
 # Install basic deps
-sudo pacman -S $(cat dependencies/basic-arch.txt) --noconfirm
+archdeps=`cat dependencies/basic-arch.txt`
+sudo pacman -S $archdeps --noconfirm
 
 
 # Backup current config
@@ -57,6 +72,7 @@ if [ -d $HOME/.config/btop ]; then
 fi
 
 # Backup hyprland config
+clear
 if [ $hypr == 0 ]; then
     echo "I will ask you questions. If you don't use what I ask you about"
     echo "leave it blank. Make sure to specify FULL path ex(/home/user/.config/dunst)"
@@ -86,44 +102,54 @@ if [ $hypr == 0 ]; then
 fi
 
 # Install rust
+if [[ $paruinstall == "YES"  ]]; then
+  paru -R rust --noconfirm
+fi
+
+# Think it might be broken
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # Install JetBrainsMono NerdFont and icons
 curl -LO https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar; tar -xvf assets.tar
 curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
 if [ ! -d "/usr/share/fonts/JetBrainsMono" ]; then
-    mkdir -p /usr/share/fonts/JetBrainsMono/
+    sudo mkdir -p /usr/share/fonts/JetBrainsMono/
 fi
 
 fontdir="/usr/share/fonts/JetBrainsMono/"
 
 # install oh my posh
+# Might be broken
 curl -s https://ohmyposh.dev/install.sh | bash -s
 pushd ~/.local/bin
 sudo mv oh-my-posh /usr/local/bin
 popd
 
-tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz
+sudo tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz
 cd $fontdir; sudo rm -rf *.md *.txt
 cd $dotdir
 fc-cache -frv
 
 # Initlize config
+cd $dotdir
 for dir in *; do
-    if [[ -d $dir && ! $dir == "dependencies" && ! $dir == "hyprland" && ! $dir == "release" && ! $dir == "archive" ]]; then
+    if [[ -d $dir && ! $dir == "dependencies" && ! $dir == "hyprland" && ! $dir == "release" && ! $dir == "archive" && ! $dir == "backup" && ! $dir == "icons" && ! $dir == "other" && ! $dir == "wallpapers" ]]; then
         echo "Applying config for $dir"
+        stow -D $dir 
         stow $dir --adopt
     fi
 done
 
-# Install icons for hyprland
+cd $dotdir
+
+# Install icons for hyprland & wallpapers
 if [ $hypr == 0 ]; then
     stow hyprland --adopt
     if [ ! -d "/usr/share/icons/FontAwsome" ]; then
         sudo mkdir -p /usr/share/icons/FontAwesome; icons="/usr/share/icons/FontAwesome/"
     fi
     sudo cp icons/* $icons
-    mkdir -p $HOME/Pictures/Wallpapers; mv wallpapers/* $HOME/Pictures/Wallpapers
+    mkdir -p $HOME/Pictures/Wallpapers; cp wallpapers/* $HOME/Pictures/Wallpapers
 fi
 
 # Install spotify
@@ -136,13 +162,6 @@ fi
 cd $dotdir
 cp other/spotify-notify.service $HOME/.config/systemd/user/
 
-# Install arch wallapaper for hyprland
-if [ $hypr == 0 ]; then
-    if [ ! -d "$HOME/Pictures/Wallpapers"]; then
-        mkdir -p $HOME/Pictures/Wallpapers/
-    fi
-    cp wallpapers/* $HOME/Pictures/Wallpapers/
-fi
 
 # Install p10k
 cd $HOME
@@ -167,7 +186,7 @@ if [ $hypr == 0 ]; then
 
     mkdir build; cd build/
     cmake -G Ninja ..; sudo ninja && sudo ninja install
-    systemctl enable ly@tty2.service; systemctl disable getty@tty2.service
+    systemctl enable ly@tty1.service; systemctl disable getty@tty1.service
     rustup override set stable || exit -1; rustup update stable; git clone https://github.com/coffebar/waybar-module-pacman-updates.git /tmp/waybar-module-pacman-updates
     pushd /tmp/waybar-module-pacman-updates && cargo build --release; mkdir -p ~/.local/bin; cp target/release/waybar-module-pacman-updates ~/.local/bin/
     popd && rm -rf /tmp/waybar-module-pacman-updates 
