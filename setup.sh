@@ -6,69 +6,88 @@ dotdir=`pwd`
 # Update pkgs
 sudo pacman -Syu --noconfirm
 
-#Install gum
-sudo pacman -S gum --noconfirm
+#Install script runtime deps
+sudo pacman -S gum base-devel --noconfirm
 pip install chardet lib3 datetime requests statistics urllib3 dulwich --break-system-packages
 
-# Instlall paru
-sudo pacman -S base-devel --noconfirm 
-$parustatus=`paru --version`
-
-if [[ ! -d $HOME/paru || $parustatus == 1 ]]; then
-    cd $HOME; git clone https://aur.archlinux.org/paru.git
-    cd paru/; makepkg -si; cd $dotdir
+# Install paru
+if [[ ! -f /usr/bin/paru ]]; then
+    pushd $HOME; git clone https://aur.archlinux.org/paru.git
+    cd paru/; makepkg -si; popd
 fi
 
 # Install hyprland deps
 clear
-echo ""
+hypr=1
 if gum confirm "Would you like to install hyprland?"; then
     hypr=0
     aurdeps=`cat dependencies/aur-arch.txt`
-    if [[ ! -f $HOME/.cache/aurdeps ]]; then
-	  paru -S $aurdeps --noconfirm
-      touch $HOME/.cache/aurdeps
-      paruinstall="YES"
+    if [[ ! -f $HOME/.cache/aurdeps.cache ]]; then
+        paru -S $aurdeps --noconfirm
+        touch $HOME/.cache/aurdeps.cache
+        paruinstall="YES"
     else
-	  paru --noconfirm
+        paru --noconfirm
     fi
+fi
 
+# Remove packaged rust
+if [[ $paruinstall == "YES"  ]]; then
+  paru -R rust --noconfirm
 fi
 
 # Install basic deps
 archdeps=`cat dependencies/basic-arch.txt`
 sudo pacman -S $archdeps --noconfirm
 
+# Install non pkg dependencies
+nonpkgdeps() {
+    # Rust & Other & Fonts
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    curl -LO https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar; tar -xvf assets.tar
+
+    curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
+    if [ ! -d "/usr/share/fonts/JetBrainsMono" ]; then
+        sudo mkdir -p /usr/share/fonts/JetBrainsMono/
+    fi
+
+    fontdir="/usr/share/fonts/JetBrainsMono/"
+    sudo tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz
+    cd $fontdir; sudo rm -rf *.md *.txt
+    cd $dotdir
+    fc-cache -frv
+
+
+    # Oh-My-Posh
+    curl -s https://ohmyposh.dev/install.sh | bash -s
+    cd ~/.local/bin
+    sudo mv oh-my-posh /usr/local/bin
+    cd $dotdir
+}
+
+nonpkgdeps
 
 # Backup current config
 mkdir -p backup/config/
 
-if [ -d $HOME/.config/kitty ]; then
-    cp -r $HOME/.config/kitty ./backup/config/
-fi
-
-if [ -d $HOME/.config/.vim ]; then
-    cp -r $HOME/.config/.vim ./backup/config/
-fi
+for backupdir in *; do
+    if [[ -d $backupdir && ! $backupdir == "dependencies" && ! $backupdir == "hyprland" && ! $backupdir == "release" && ! $backupdir == "archive"  && ! $backupdir == "backup" && ! $backupdir == "icons" && ! $backupdir == "other" && ! $backupdir == "wallpapers" ]]; then
+        if [[ -d $HOME/.config/$backupdir ]]; then
+            cp -r $HOME/.config/$backupdir $dotdir/backup/config/
+        fi
+    fi
+done
 
 if [ -f $HOME/.vimrc ]; then
-    cp $HOME/.vimrc ./backup/vimrc
+    cp $HOME/.vimrc $dotdir/backup/vimrc
 fi
 
 if [ -f $HOME/.p10k.zsh ]; then
-    cp $HOME/.p10k.zsh ./backup/p10k.zsh
+    cp $HOME/.p10k.zsh $dotdir/backup/p10k.zsh
 fi
 
 if [ -f $HOME/.zshrc ]; then
-    cp $HOME/.zshrc ./backup/zshrc
-fi
-
-if [ -d $HOME/.config/eza ]; then
-    cp -r $HOME/.config/eza ./backup/config/
-fi
-
-if [ -d $HOME/.config/btop ]; then
-    cp -r $HOME/.config/btop ./backup/config/
+    cp $HOME/.zshrc $dotdir/backup/zshrc
 fi
 
 # Backup hyprland config
@@ -83,52 +102,23 @@ if [ $hypr == 0 ]; then
     read -p "Input your rofi config path: " rofipath
     read -p "Input your waybar config path: " waybarpath
     echo ""
-
+    
     if [[ ! $dunstpath == "" ]]; then
-        cp -r $dunstpath ./backup/config/
+        cp -r $dunstpath $dotdir/backup/config/
     fi
 
     if [[ ! $hyprpath == "" ]]; then
-        cp -r $hyprpath ./backup/config/
+        cp -r $hyprpath $dotdir/backup/config/
     fi
 
     if [[ ! $rofipath == "" ]]; then
-        cp -r $rofipath ./backup/config/
+        cp -r $rofipath $dotdir/backup/config/
     fi
 
     if [[ ! $waybarpath == "" ]]; then
-        cp -r $waybarpath ./backup/config/
+        cp -r $waybarpath $dotdir/backup/config/
     fi
 fi
-
-# Install rust
-if [[ $paruinstall == "YES"  ]]; then
-  paru -R rust --noconfirm
-fi
-
-# Think it might be broken
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-# Install JetBrainsMono NerdFont and icons
-curl -LO https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar; tar -xvf assets.tar
-curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
-if [ ! -d "/usr/share/fonts/JetBrainsMono" ]; then
-    sudo mkdir -p /usr/share/fonts/JetBrainsMono/
-fi
-
-fontdir="/usr/share/fonts/JetBrainsMono/"
-
-# install oh my posh
-# Might be broken
-curl -s https://ohmyposh.dev/install.sh | bash -s
-pushd ~/.local/bin
-sudo mv oh-my-posh /usr/local/bin
-popd
-
-sudo tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz
-cd $fontdir; sudo rm -rf *.md *.txt
-cd $dotdir
-fc-cache -frv
 
 # Initlize config
 cd $dotdir
@@ -162,16 +152,6 @@ fi
 cd $dotdir
 cp other/spotify-notify.service $HOME/.config/systemd/user/
 
-
-# Install p10k
-cd $HOME
-if [ ! -d "$HOME/powerlevel10k" ]; then
-    git clone https://github.com/romkatv/powerlevel10k.git
-else
-    cd $HOME/powerlevel10k; git pull --force; cd $HOME
-fi
-
-# Enable dunst spotify
 systemctl --user daemon-reload; systemctl --user enable --now spotify-notify.service
 systemctl --user enable spotify-notify.service; systemctl --user start spotify-notify.service
 
