@@ -2,6 +2,7 @@
 
 TODO:
 Make hash thing better
+also move sh to script dir
 
 ### NOTICE ###
 The archive folder will have old config</br>
