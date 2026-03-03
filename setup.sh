@@ -1,34 +1,103 @@
 #!/bin/bash
-set -e
+
+# Uncomment this for output logging
+LOG_FILE="log.txt"
+
+# Comment this for ouput loggin also
+# LOGGING_ACTIVE=1
+
+if [ -z "$LOGGING_ACTIVE" ]; then
+    # Set the flag and re-run this script using the 'script' command
+    rm log.txt
+    export LOGGING_ACTIVE=1
+    exec script -q -c "$0 $*" "$LOG_FILE"
+    exit
+fi
+
+#set -e
+cache="$HOME/.cache/setup.cache"
 dotdir=$(pwd)
 hyprinstall=1
-hyprconfig=0
+hyprconfig=1
 paruinstall="NO"
+mkdir -p "$HOME/.cache/"
+if [[ ! -f "$HOME/.cache/setup.cache" ]]; then
+    cp $dotdir/setup.cache "$HOME/.cache/setup.cache"
+fi
+
+# Spinner function
+spinner() {
+    local pid=$1
+    local delay=0.2
+    local spinstr='|/-\'
+    
+    # Capture start time
+    local start_time=$SECONDS
+    
+    # Hide cursor
+    tput civis 
+
+    while kill -0 "$pid" 2>/dev/null; do
+        local temp=${spinstr#?}
+        printf "\e[0;36m [%c] " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b" # Clears the "[x] "
+    done
+
+    # Calculate total time
+    local total_seconds=$(( SECONDS - start_time ))
+    
+    # Convert to minutes and seconds
+    local m=$(( total_seconds / 60 ))
+    local s=$(( total_seconds % 60 ))
+
+    # Restore cursor
+    tput cnorm
+
+    # Logic to print either "1m 10s" or just "10s"
+    if [ $m -gt 0 ]; then
+        echo -e "\e[1;32mDone in ${m}m ${s}s!\e[0m \n"
+    else
+        echo -e "\e[1;32mDone in ${s}s!\e[0m \n"
+    fi
+}
+
 
 # Update pkgs and install script deps
 sudo pacman -Syu --noconfirm
-sudo pacman -S gum base-devel python3 python-pip --noconfirm
-pip install chardet lib3 datetime requests statistics urllib3 dulwich --break-system-packages
-
+scriptdepsst=$(sed -n '1p' $cache)
+if [[ $scriptdepsst -eq 0 ]]; then
+    sudo pacman -S gum base-devel python3 python-pip --noconfirm
+    pip install chardet lib3 datetime requests statistics urllib3 dulwich --break-system-packages
+    sed -i '1c\1' $cache
+fi
 # Install paru
-if [[ ! -x /usr/bin/paru ]]; then
+parustatus=$(sed -n '2p' $cache)
+if [[ ! -x /usr/bin/paru || $parustatus -eq 0 ]]; then
     pushd $HOME; git clone https://aur.archlinux.org/paru.git
     cd paru/ && makepkg -si --noconfirm; popd
+    sed -i '2c\1' $cache
 fi
 
 # Install hyprland deps
 clear
 if gum confirm "Would you like to install hyprland/update?"; then
-    hyprinstall=0
+    hyprinstall=1
     aurdeps=$(cat dependencies/aur-arch.txt)
-    if [[ ! -f "$HOME/.cache/aurdeps.cache" ]]; then
+    hyprdepsst=$(sed -n '3p' $cache)
+    if [[ $hyprdepsst -eq 0 ]]; then
         paru -S $aurdeps --noconfirm
-        mkdir -p "$HOME/.cache"; touch "$HOME/.cache/aurdeps.cache"
         paruinstall="YES"
+        sed -i '3c\0' $cache
     else
         paru -Syu --noconfirm
     fi
+else
+    hyprinstall=0
 fi
+
+
 
 # Remove packaged rust
 if [[ $paruinstall == "YES"  ]]; then
@@ -37,31 +106,38 @@ fi
 
 # Install basic deps
 archdeps=$(cat dependencies/basic-arch.txt)
-sudo pacman -S $archdeps --noconfirm --needed
+archdepsst=$(sed -n '4p' $cache)
+if [[ $archdepsst -eq 0 ]]; then
+    sudo pacman -S $archdeps --noconfirm --needed
+    sed -i '4c\0' $cache
+fi
 
 # Install non pkg dependencies
 nonpkgdeps() {
     # Rust & Other & Fonts
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    curl -LO https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar; tar -xvf assets.tar
+    nonpkgdepsst=$(sed -n '5p' $cache)
+    if [[ $nonpkgdepsst -eq 0 ]]; then
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        curl -LO https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar; tar -xvf assets.tar
     
-    fontdir="/usr/share/fonts/JetBrainsMono/"
-    if [[ ! -d "/usr/share/fonts/JetBrainsMono" ]]; then
-        sudo mkdir -p /usr/share/fonts/JetBrainsMono/
+        fontdir="/usr/share/fonts/JetBrainsMono/"
+        if [[ ! -d "/usr/share/fonts/JetBrainsMono" ]]; then
+            sudo mkdir -p /usr/share/fonts/JetBrainsMono/
+        fi
+
+        curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
+        sudo tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz && rm -rf assets.tar
+        cd $fontdir; sudo rm -rf *.md *.txt
+        cd $dotdir
+        fc-cache -frv
+
+
+        # Oh-My-Posh
+        #curl -s https://ohmyposh.dev/install.sh | bash -s
+        #mkdir -p "$HOME/.local/bin"; cd ~/.local/bin
+        #sudo mv oh-my-posh /usr/local/bin
+        cd $dotdir
     fi
-
-    curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
-    sudo tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz && rm -rf assets.tar
-    cd $fontdir; sudo rm -rf *.md *.txt
-    cd $dotdir
-    fc-cache -frv
-
-
-    # Oh-My-Posh
-    curl -s https://ohmyposh.dev/install.sh | bash -s
-    mkdir -p "$HOME/.local/bin"; cd ~/.local/bin
-    sudo mv oh-my-posh /usr/local/bin
-    cd $dotdir
 }
 
 nonpkgdeps
@@ -91,7 +167,7 @@ done
 
 # Backup hyprland config
 clear
-if [[ $hyprconfig -eq 0 ]]; then
+if [[ $hyprconfig -eq 1 ]]; then
     echo "I will ask you questions. If you don't use what I ask you about"
     echo "leave it blank. Make sure to specify FULL path (ex: /home/user/.config/dunst)"
     sleep 3.5
@@ -124,7 +200,7 @@ done
 cd $dotdir
 
 # Install icons for hyprland & wallpapers
-if [[ $hyprconfig -eq 0 ]]; then
+if [[ $hyprconfig -eq 1 ]]; then
     stow hyprland --adopt
     if [[ ! -d "/usr/share/icons/FontAwsome" ]]; then
         sudo mkdir -p /usr/share/icons/FontAwesome; icons="/usr/share/icons/FontAwesome/"
@@ -148,7 +224,7 @@ systemctl --user enable spotify-notify.service; systemctl --user start spotify-n
 
 
 # Install Hyprland
-if [[ $hyprinstall -eq 0 ]]; then
+if [[ $hyprinstall -eq 1 ]]; then
     if [[ ! -d "$HOME/Hyprland" ]]; then
         git clone --recursive https://github.com/hyprwm/Hyprland "$HOME/Hyprland"
     else
@@ -165,7 +241,7 @@ fi
 # Ly start
 systemctl enable ly@tty1 || true
 systemctl disable ly@tty2 || true
-systemctl enable gettyy@tty2 || true
+systemctl enable getty@tty2 || true
 systemctl disable getty@tty1 || true
 
 # Waybar module
@@ -201,7 +277,7 @@ if [[ $spotx == "y" || $spotx == "Y" ]]; then
     cd $HOME; bash <(curl -sSL https://spotx-official.github.io/run.sh)
 fi
 
-if [[ $hyprconfig -eq 0 ]]; then
+if [[ $hyprconfig -eq 1 ]]; then
     git clone https://codeberg.org/LGFae/awww.git /tmp/awww
     pushd /tmp/awww; cargo build --release
     sudo cp target/release/awww /usr/local/bin; sudo cp target/release/awww-daemon /usr/local/bin
