@@ -1,5 +1,8 @@
 ## My Dotfiles
 
+TODO:
+Make hash thing better
+
 ### NOTICE ###
 The archive folder will have old config</br>
 for stuff I don't currently use anymore
