@@ -25,6 +25,10 @@ else
     echo "Dependencies changed or cache missing. Reseting cache..."
     curl -LO https://raw.githubusercontent.com/clippyricer/dotfiles/refs/heads/main/setup.cache
     cp setup.cache "$HOME/.cache/setup.cache"
+    setupcache="$HOME/.cache/setup.cache"
+    for i in 2 3 4 5; do
+        sed -i "${i}c\\1" $setupcache
+    done
     if [ ! -s "$cache" ]; then
         echo "$ARCH_HASH" > "$cache"
     else
