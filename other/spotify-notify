@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+# music dir for local songs imported in spotify (change this to the music dir path)
+MUSIC_DIR="$HOME/Music"
+
+# Function to extract album art from local MP3
+extract_local_art() {
+    local title="$1"
+    local artist="$2"
+
+    # Loop over all mp3 files in ~/Music
+    for file in "$MUSIC_DIR"/*.mp3; do
+        [[ ! -f "$file" ]] && continue
+
+        # Extract metadata from mp3 file using ffprobe
+        mp3_title=$(ffprobe -v quiet -show_entries format_tags=title -of csv=p=0 "$file")
+        mp3_artist=$(ffprobe -v quiet -show_entries format_tags=artist -of csv=p=0 "$file")
+
+        # Compare title (case-insensitive)
+        if [[ "${mp3_title,,}" == "${title,,}" ]]; then
+            # Extract embedded album art
+            ffmpeg -v quiet -i "$file" -an -vcodec copy /tmp/spotify_local_art.jpg
+            echo "/tmp/spotify_local_art.jpg"
+            return
+        fi
+    done
+
+    echo ""
+}
+
+playerctl --player=spotify metadata --format '{{title}}|{{artist}}|{{mpris:artUrl}}|{{position}}|{{mpris:length}}' --follow |
+while IFS="|" read -r title artist arturl pos_raw len_raw; do
+
+    img=""
+
+    # --- ONLINE Spotify track (artUrl available) ---
+    if [[ -n "$arturl" ]]; then
+        img="/tmp/spotify_art.jpg"
+        curl -s "$arturl" -o "$img"
+        if [[ ! -s "$img" ]]; then
+            img=""
+        fi
+    fi
+
+    # --- LOCAL Spotify track (no artUrl) ---
+    if [[ -z "$arturl" ]]; then
+        local_img=$(extract_local_art "$title" "$artist")
+        if [[ -f "$local_img" ]]; then
+            img="$local_img"
+        fi
+    fi
+
+    # --- Calculate Percentage and Format Time ---
+    percent=0
+    pos_fmt="0:00"
+    len_fmt="0:00"
+
+    if [[ -n "$len_raw" && "$len_raw" -gt 0 && -n "$pos_raw" ]]; then
+        # Calculate percentage for the bar
+        percent=$(( 100 * pos_raw / len_raw ))
+        
+        # Convert microseconds to seconds
+        pos_s=$(( pos_raw / 1000000 ))
+        len_s=$(( len_raw / 1000000 ))
+        
+        # Format to MM:SS
+        pos_fmt=$(printf "%d:%02d" $((pos_s/60)) $((pos_s%60)))
+        len_fmt=$(printf "%d:%02d" $((len_s/60)) $((len_s%60)))
+    fi
+
+    # --- Notification text style ---
+    # Added timestamps in italics below the artist
+    #message="<big><b>$title</b></big>\n$artist\n<i>$pos_fmt / $len_fmt</i>"
+    message="<b>$title</b>\n$artist ($pos_fmt / $len_fmt)"
+    # --- SEND notification ---
+    if [[ -n "$img" ]]; then
+        notify-send "" "$message" -i "$img" -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
+    else
+        notify-send "" "$message" -h int:value:"$percent" -h string:x-dunst-stack-tag:spotify
+    fi
+
+done

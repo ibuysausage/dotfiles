@@ -84,7 +84,7 @@ fi
 clear
 if gum confirm "Would you like to install hyprland/update?"; then
     hyprinstall=1
-    aurdeps=$(cat dependencies/aur-arch.txt)
+    aurdeps=$(cat ../dependencies/aur-arch.txt)
     hyprdepsst=$(sed -n '3p' $setupcache)
     if [[ $hyprdepsst -eq 0 ]]; then
         paru -S $aurdeps --noconfirm
