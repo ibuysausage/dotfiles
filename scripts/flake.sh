@@ -24,6 +24,7 @@ if [[ ! -d "/usr/share/fonts/JetBrainsMono" ]]; then
     sudo mkdir -p /usr/share/fonts/JetBrainsMono/
 fi
 
+mkdir -p $HOME/Pictures/Wallapers; cp wallpapers/* $HOME/Pictures/Wallpapers
 curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
 sudo tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz
 cd $fontdir; sudo rm -rf *.md *.txt
