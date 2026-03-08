@@ -12,6 +12,41 @@
         libnotify
         tmux
         zip
+        python3
+        python3Packages.pip
+        font-awesome
+        scdoc
+        unzip
+        fastfetch
+        eza
+        yazi
+        git
+        cmatrix
+        glow
+        zsh
+        zoxide
+        fzf
+        vim
+        kitty
+        ripgrep
+        fd
+        stow
+        curl
+        spotify
+        rofi
+        dunst
+        playerctl
+        ffmpeg_7
+        btop
+        xdg-desktop-portal
+        pipewire
+        pamixer
+        wireplumber
+        waybar
+        alsa-utils
+        brightnessctl
+        ly
+        oh-my-posh
       ];
     };
   };
