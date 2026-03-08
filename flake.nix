@@ -9,6 +9,7 @@
     nixosModules.default = { pkgs, ... }: {
       environment.systemPackages = with pkgs; [
         jq
+        swww
         libnotify
         tmux
         zip
