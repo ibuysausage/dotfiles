@@ -53,6 +53,7 @@
         cmake
         meson
         jetbrains-mono
+        tree
       ];
     };
   };
