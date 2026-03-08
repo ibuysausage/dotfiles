@@ -35,7 +35,7 @@ cd "$scriptdir/.."
 for dir in */; do
     dir=${dir%/}
     case "$dir" in
-        dependencies|hyprland|release|archive|backup|icons|other|scripts|wallpapers)
+        dependencies|release|archive|backup|icons|other|scripts|wallpapers)
             continue
             ;;
         *)
