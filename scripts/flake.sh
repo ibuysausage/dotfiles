@@ -17,7 +17,20 @@ scriptdir=$(pwd)
 echo "Backing up existing configs..."
 mkdir -p "../backup/config/"
 # (Keep your existing backup loop here, it works fine in $HOME)
+cd ..
+curl -LO --output-dir ../ https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar;
+tar -xvf assets.tar && rm -rf assets.tar
 
+fontdir="/usr/share/fonts/JetBrainsMono/"
+if [[ ! -d "/usr/share/fonts/JetBrainsMono" ]]; then
+    sudo mkdir -p /usr/share/fonts/JetBrainsMono/
+fi
+
+curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
+sudo tar -xvf JetBrainsMono.tar.xz -C $fontdir; rm -rf JetBrainsMono.tar.xz
+cd $fontdir; sudo rm -rf *.md *.txt
+cd $scriptdir
+fc-cache -frv
 # --- Dotfiles (Stow) ---
 # This part works on NixOS as long as it's in your home folder
 cd "$scriptdir/.."
