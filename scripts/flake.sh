@@ -17,7 +17,7 @@ scriptdir=$(pwd)
 echo "Backing up existing configs..."
 mkdir -p "../backup/config/"
 # (Keep your existing backup loop here, it works fine in $HOME)
-curl -LO --output-dir ../ https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar;
+curl -LO --output-dir ../ https://github.com/clippyricer/dotfiles/releases/download/v0.0.2/assets.tar;
 cd ..; tar -xvf assets.tar && rm -rf assets.tar
 fontdir="/usr/share/fonts/JetBrainsMono/"
 if [[ ! -d "/usr/share/fonts/JetBrainsMono" ]]; then

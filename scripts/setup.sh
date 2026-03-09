@@ -118,7 +118,7 @@ nonpkgdeps() {
     nonpkgdepsst=$(sed -n '5p' $setupcache)
     if [[ $nonpkgdepsst -eq 0 ]]; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-        curl -LO --output-dir ../ https://github.com/clippyricer/dotfiles/releases/download/v0.1.0/assets.tar; cd ..
+        curl -LO --output-dir ../ https://github.com/clippyricer/dotfiles/releases/download/v0.0.2/assets.tar; cd ..
         tar -xvf assets.tar; rm -rf assets.tar
     
         fontdir="/usr/share/fonts/JetBrainsMono/"

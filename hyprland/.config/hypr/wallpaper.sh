@@ -3,4 +3,4 @@
 killall -q awww-daemon; rm -rf ~/.cache/awww/
 
 awww-daemon &
-awww img $HOME/Pictures/Wallpapers/arch.jpg --transition-type wipe --transition-angle 30 
+awww img $HOME/Pictures/Wallpapers/arch.png --transition-type wipe --transition-angle 30 
