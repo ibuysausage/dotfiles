@@ -1,3 +1,5 @@
+feh
+matugen
 tree
 jq
 libnotify

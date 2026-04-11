@@ -395,7 +395,7 @@ def waybar_widget(data: dict) -> str:
     weather = data['weather'][0]['main'].lower()
     temperature = round(data['main']['temp'])
 
-    return f'{colorize(weather, WHITE)} {temperature}°'
+    return f'{colorize(weather, PURPLE)} {temperature}°'
 
 
 def waybar_current(data: dict) -> str:

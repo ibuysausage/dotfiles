@@ -1,3 +1,4 @@
+@import "colors.css";
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: JetBrainsMono Nerd Font;
@@ -25,22 +26,22 @@ window#waybar {
 #network:hover,
 #battery:hover,
 #clock:hover {
-    color: #808080;
+    color: @primary;
 }
 
 #workspaces button {
     padding: 0 11px;
     margin: 0 5px;
-    background-color: #565F89;
+    background-color: @on_secondary;
     color: #ffffff;
 }
 
 #workspaces button:hover {
-    background: rgba(10, 10, 1, 0.2);
+    background: @inverse_secondary;
 }
 
 #workspaces button.focused, #workspaces button.active {
-    background-color: #64727D;
+    background-color: @inverse_primary;
 }
 
 #cpu,
@@ -60,9 +61,9 @@ window#waybar {
     padding-right: 17px;
     padding-top: 5px;
     padding-bottom: 5px;
-    color: #ffffff;
+    color: @source_color;
     margin: 0 1px;
-    background-color: #121212;
+    background-color: @background;
 }
 
 #clock {
@@ -72,9 +73,9 @@ window#waybar {
 #custom-power {
     padding: 1 13px;
     padding-right: 8px;
-    color: #ffffff;
+    color: @source_color;
     margin: 0 1px;
-    background-color: #121212;
+    background-color: @background;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -104,15 +105,11 @@ window#waybar {
 }
 
 #network.disconnected {
-    background-color: #412254;
-}
-
-#temperature {
-    color: #ffffff;
+    background-color: @on_error;
 }
 
 #temperature.critical {
-    background-color: #eb4d4b;
+    background-color: @on_error;
 }
 
 #tray {
@@ -196,8 +193,4 @@ window#waybar {
 
 #privacy-item.audio-out {
     background-color: #0069d4;
-}
-
-#custom-updates {
-    color: #ffffff
 }

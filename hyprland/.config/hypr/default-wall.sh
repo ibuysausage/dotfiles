@@ -11,3 +11,4 @@ else
 fi
 
 awww img $wallpaper --transition-type wipe --transition-angle 30
+matugen image $wallpaper --prefer lightness #saturation 
