@@ -1,5 +1,4 @@
 // # z0mbi3 -  https://github.com/gh0stzk/dotfiles
-@import "colors.rasi"
 configuration {
     modi:                        "drun";
     show-icons:                  true;
