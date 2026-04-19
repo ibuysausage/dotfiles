@@ -1,7 +1,7 @@
 @import "colors.css";
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: JetBrainsMono Nerd Font;
+    font-family: CaskaydiaCoveNerdFont;
     font-size: 14px;
     border: none;
     border-radius: 20;

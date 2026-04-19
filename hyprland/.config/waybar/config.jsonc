@@ -5,7 +5,7 @@
     "height": 27, // Waybar height (to be removed for auto height)
     "margin-top": 16,
     "width": 1900,
-    "spacing": 5, // Gaps between modules (4px)
+    "spacing": 10, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
         "cpu",
