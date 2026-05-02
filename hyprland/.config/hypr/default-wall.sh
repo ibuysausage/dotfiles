@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 wallpaperdir="$HOME/Pictures/Wallpapers"  
-wallpaper="$wallpaperdir/dragon.png"
+wallpaper="$wallpaperdir/gojo.jpg"
 
 check=$(pgrep awww-daemon)
 if [[ $? -eq 0 ]]; then
