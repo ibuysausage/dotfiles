@@ -20,9 +20,7 @@ window#waybar {
 #memory:hover,
 #disk:hover,
 #custom-updates:hover,
-#custom-stk:hover,
 #custom-weather:hover,
-#custom-btop:hover,
 #network:hover,
 #battery:hover,
 #clock:hover {
@@ -30,7 +28,7 @@ window#waybar {
 }
 
 #workspaces button {
-    padding: 0 11px;
+    padding: 0 10px;
     margin: 0 5px;
     background-color: @on_secondary;
     color: #ffffff;
@@ -38,6 +36,8 @@ window#waybar {
 
 #workspaces button:hover {
     background: @inverse_secondary;
+    box-shadow: inherit; /* removes white tint */
+    text-shadow: inherit; /* removes white tint */
 }
 
 #workspaces button.focused, #workspaces button.active {
@@ -49,8 +49,6 @@ window#waybar {
 #disk,
 #custom-updates,
 #custom-weather,
-#custom-stk,
-#custom-btop,
 #network,
 #temperature,
 #pulseaudio,

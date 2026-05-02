@@ -8,3 +8,6 @@ vim/.vim/autoload/plug.vim.old
 # Junk
 release/
 log.txt
+
+# This intsall script was stupid. not gonna maintain any more
+archive/old.tar

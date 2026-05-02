@@ -111,7 +111,7 @@
     frame_width = 3
 
     # Defines color of the frame around the notification window.
-    frame_color = "#aec6ff" 
+    frame_color = "#ffb4ac" 
 
     # Size of gap to display between notifications - requires a compositor.
     # If value is greater than 0, separator_height will be ignored and a border
@@ -350,28 +350,28 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#121318"
-    foreground = "#e2e2e9"
-    frame_color = "#aec6ff"
-    highlight = "#2c4678"
+    background = "#1a1110"
+    foreground = "#f1dedc"
+    frame_color = "#ffb4ac"
+    highlight = "#73332e"
     timeout = 10
     # Icon for notifications with low urgency
     default_icon = bell
 
 [urgency_normal]
-    background = "#121318"
-    foreground = "#e2e2e9"
-    highlight = "#2c4678"
-    frame_color = "#aec6ff"
+    background = "#1a1110"
+    foreground = "#f1dedc"
+    highlight = "#73332e"
+    frame_color = "#ffb4ac"
     timeout = 10
     override_pause_level = 30
     # Icon for notifications with normal urgency
     default_icon = bell
 
 [urgency_critical]
-    background = "#121318"
-    foreground = "#e2e2e9"
-    frame_color = "#aec6ff"
+    background = "#1a1110"
+    foreground = "#f1dedc"
+    frame_color = "#ffb4ac"
     highlight = "#ffb4ab"
     timeout = 0
     override_pause_level = 60
@@ -509,7 +509,7 @@
     stack_tag = spotify
     timeout = 0
     urgency = low
-    background = "#121318"
-    foreground = "#e2e2e9"
-    frame_color = "#aec6ff"
-    highlight = "#aec6ff"
+    background = "#1a1110"
+    foreground = "#f1dedc"
+    frame_color = "#ffb4ac"
+    highlight = "#ffb4ac"
