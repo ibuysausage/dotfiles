@@ -1,0 +1,8 @@
+-- Variables
+
+terminal    = "kitty"
+fileManager = "dolphin"
+menu        = "rofi -show drun -show-icons -theme ~/.config/rofi/config.rasi"
+statusbar   = "~/.config/hypr/scripts/launch.sh"
+wallswitch  = "~/.config/hypr/scripts/wallpaper.sh"
+walldefault = "~/.config/hypr/scripts/default-wall.sh"

@@ -27,11 +27,11 @@ elif [ "${mute}" == "false" ] &&
     symbol=""
 fi
 
-#if [[ $volume == 0 || "$mute" == "true" ]]; then
-#    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag "Volume muted"
-#else
-#    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag \
-#    -h int:value:"$volume" "Volume: ${volume}%"
-#fi
+if [[ $volume == 0 || "$mute" == "true" ]]; then
+    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag "Volume muted"
+else
+    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag \
+    -h int:value:"$volume" "Volume: ${volume}%"
+fi
 
-#canberra-gtk-play -i audio-volume-change -d "changeVolume"
+canberra-gtk-play -i audio-volume-change -d "changeVolume"

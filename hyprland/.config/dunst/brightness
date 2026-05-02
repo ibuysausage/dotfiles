@@ -21,8 +21,8 @@ percentage="$(awk -v current=${current} -v max=${max} 'BEGIN { print ( (current 
 percentage="${percentage%.*}"
 
 # Show the brightness notification
-#dunstify -a "changeBrightness" -u low -i sun -h string:x-dunst-stack-tag:$msgTag \
-#    -h int:value:"${percentage}" "Brightness: ${percentage}%"
+dunstify -a "changeBrightness" -u low -i sun -h string:x-dunst-stack-tag:$msgTag \
+    -h int:value:"${percentage}" "Brightness: ${percentage}%"
 
 # Play the brightness changed sound
-#canberra-gtk-play -i audio-volume-change -d "changeVolume"
+canberra-gtk-play -i audio-volume-change -d "changeVolume"

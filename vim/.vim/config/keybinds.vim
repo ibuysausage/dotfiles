@@ -13,6 +13,8 @@ nnoremap <leader>nt :NERDTreeToggle<CR>
 " Terminal
 nnoremap <leader>t :term<CR>
 nnoremap <leader>q :q<CR>
+nnoremap <leader>wq :wq<CR>
+nnoremap <leader>w :w<CR>
 
 " VCoolor
 nnoremap <leader>vc :VCoolor<CR>
