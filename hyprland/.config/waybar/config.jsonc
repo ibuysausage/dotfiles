@@ -163,7 +163,7 @@
     "custom/updates": {
     "format": "{} {icon}",
     "return-type": "json",
-    "on-click": "kitty sh -c 'paru -Syu --noconfirm'",
+    "on-click": "kitty sh -c 'paru -Syu --noconfirm'; notify-send \"Update Finished!\"",
     "format-icons": {
         "has-updates": "",
         "updated": ""

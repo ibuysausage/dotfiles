@@ -22,5 +22,5 @@ fi
 rand=$(( RANDOM % ${#files[@]} ))                                           
 output="${files[$rand]}" 
 
-awww img $output --transition-type wipe --transition-angle 30 
-matugen image $output --prefer lightness #saturation
+awww img $output --transition-type grow --transition-pos center --transition-fps 60 --transition-duration 1.1 
+matugen image $output --prefer saturation #lightness #saturation

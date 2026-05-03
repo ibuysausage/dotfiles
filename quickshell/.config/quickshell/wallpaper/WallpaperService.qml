@@ -52,8 +52,14 @@ Singleton {
 
     setProcess.command = ["awww", "img", path,
       "--transition-type", "grow", "--transition-pos", "center",
-      "--transition-duration", "1"];
+      "--transition-duration", "1.1",
+      "--transition-fps", "60"];
     setProcess.running = true;
+
+
+    matugenProcess.command = ["matugen", "image", path, "--prefer", "saturation"];
+    matugenProcess.running = true;
+
 
     // Save to config
     saveProcess.command = ["sh", "-c", 'printf "%s" "$1" > "$HOME/.config/quickshell/wallpaper.conf"', "sh", path];
@@ -62,6 +68,12 @@ Singleton {
 
   Process {
     id: setProcess
+    command: []
+    running: false
+  }
+
+  Process {
+    id: matugenProcess
     command: []
     running: false
   }

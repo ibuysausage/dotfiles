@@ -14,7 +14,7 @@ nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>t :term<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>wq :wq<CR>
-nnoremap <leader>w :w<CR>
+nnoremap <leader>ww :w<CR>
 
 " VCoolor
 nnoremap <leader>vc :VCoolor<CR>
