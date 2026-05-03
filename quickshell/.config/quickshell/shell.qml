@@ -1,0 +1,3 @@
+import "wallpaper"
+
+WallpaperManager {}

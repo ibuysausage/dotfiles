@@ -32,6 +32,7 @@ alias cmatrix="cmatrix -u 10 -B f"
 alias g="glow"
 alias vi="vim"
 alias tree="tree -ah -I '.git'"
+alias update="paru -Syu"
 alias yeet='paru -Rcs'
 alias yay='paru'
 alias top='btop'

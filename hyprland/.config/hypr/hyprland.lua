@@ -51,30 +51,28 @@ hl.config({
         gaps_in  = 5,
         gaps_out = 16,
 
-        border_size = 2,
+        border_size = 1,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
+            active_border   = { colors = {"rgb(a7c080)", "rgb(83c092)"}, angle = 45 },
             inactive_border = "rgba(595959aa)",
         },
-        resize_on_border = false,
+        resize_on_border = true,
         allow_tearing = false,
         layout = "dwindle",
     },
 
     decoration = {
-        rounding       = 20,
-        rounding_power = 2,
-
-        -- Change transparency of focused and unfocused windows
+        rounding       = 10,
+        rounding_power = 5,
         active_opacity   = 1.0,
-        inactive_opacity = 1.0,
+        inactive_opacity = 0.7,
 
         shadow = {
             enabled      = true,
-            range        = 4,
+            range        = 14,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color        = "rgba(00000045)",--0xee1a1a1a,
         },
 
         blur = {
@@ -187,6 +185,8 @@ hl.config({
 
         touchpad = {
             natural_scroll = true,
+            disable_while_typing = false,
+            tap_to_click = true,
         },
     },
 })
@@ -267,6 +267,14 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
+-- Scripts
+-- hl.bind(mainMod .. " + SHIFT + CTRL + Z", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/rofi.sh"))
+hl.bind(mainMod .. " + SHIFT + CTRL + Z", hl.dsp.exec_cmd("qs ipc call wallpaper toggle"))
+hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd(wallswitch))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/launch.sh"))
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("kitty -e cava"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("kitty -e cmatrix -u 10 -B f"))
+hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(walldefault))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
