@@ -9,3 +9,13 @@ post_hook = 'pkill -SIGUSR2 waybar'
 input_path = '~/.config/matugen/templates/dunstrc'
 output_path = '~/.config/dunst/dunstrc'
 post_hook = 'dunstctl reload'
+
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/.config/kitty/themes/Matugen.conf'
+post_hook = "kitty +kitten themes --reload-in=all Matugen"
+
+[templates.spotify]
+input_path = '~/.config/matugen/templates/spicetify.ini'
+output_path = '~/.config/spicetify/Themes/Sleek/color.ini'
+#post_hook = 'spicetify watch -s 2>&1 | sed "/Reloaded Spotify/q"'

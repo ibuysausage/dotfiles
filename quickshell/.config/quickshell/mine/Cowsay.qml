@@ -1,4 +1,4 @@
-import QuickShell
+import Quickshell
 import QtQuick
 import Quickshell.Io
 
@@ -6,8 +6,8 @@ PanelWindow {
 
     color: "transparent"
 
-    implicitWidth: 600
-    implicitHeight: 800
+    implicitWidth: 950
+    implicitHeight: 790
 
     Rectangle {
         
@@ -19,12 +19,15 @@ PanelWindow {
 
         Text {
             id: cowsay
-
+        
             anchors.centerIn: parent
-            font.pixelSize: 20
-            font.color: "yellow"
+            font.kerning: false
+            font.family: "CaskaydiaCove Nerd Font"
+            font.pixelSize: 17
+            color: "yellow"
 
             Process {
+                id: cowsayProc
                 command: ["cowsay", "-r", "its a mee"]
 
                 running: true
@@ -33,6 +36,15 @@ PanelWindow {
                     onStreamFinished: cowsay.text = this.text
                 }
             }
+        }
+
+        Timer {
+
+            interval: 1700
+            running: true
+            repeat: true
+
+            onTriggered: cowsayProc.running = true
         }
     }
 }    
