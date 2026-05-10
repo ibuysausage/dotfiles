@@ -163,7 +163,7 @@
     "custom/updates": {
     "format": "{} {icon}",
     "return-type": "json",
-    "on-click": "kitty sh -c 'paru -Syu --noconfirm'; notify-send 'Update Finished!'",
+    "on-click": "kitty sh -c 'paru -Syu --noconfirm'; notify-send 'Update Finished!'; pw-play ~/.config/kitty/uwu.mp3",
     "format-icons": {
         "has-updates": "",
         "updated": ""
