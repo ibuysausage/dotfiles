@@ -43,6 +43,7 @@ alias ompext='oh-my-posh config export -f toml -o ~/.dotfiles/zsh/.config/ohmypo
 alias reload='clear; source ~/.zshrc'
 alias tree='eza -T --icons'
 alias swww='awww'
+alias kdiff='kitten diff'
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
