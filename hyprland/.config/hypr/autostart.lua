@@ -1,5 +1,6 @@
--- Autostart
-
+-------------------
+---- Autostart ----
+-------------------
 require("variables")
 
 hl.on("hyprland.start", function ()
@@ -9,5 +10,5 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("dunst")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("dunstify 'i use arch btw'")
-    hl.exec_cmd("quickshell")
+    hl.exec_cmd("qs")
 end)

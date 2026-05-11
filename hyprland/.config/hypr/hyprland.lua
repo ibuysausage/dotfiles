@@ -1,17 +1,7 @@
 require("variables")
 require("autostart")
 require("binds")
-
-------------------
----- MONITORS ----
-------------------
-
-hl.monitor({
-    output   = "",
-    mode     = "preferred",
-    position = "auto",
-    scale    = "1",
-})
+require("monitors")
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
