@@ -7,16 +7,15 @@ require("binds")
 ------------------
 
 hl.monitor({
-    output   = "",
-    mode     = "preferred",
-    position = "auto",
+    output   = "eDP-1",
+    mode     = "1920x1080@60",
+    position = "0x0",
     scale    = "1",
 })
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
-
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
@@ -60,6 +59,10 @@ hl.config({
         layout = "dwindle",
     },
 
+    cursor = {
+        no_hardware_cursors = 1,
+    },
+
     decoration = {
         rounding       = 10,
         rounding_power = 5,
@@ -85,6 +88,10 @@ hl.config({
         enabled = true,
     },
 })
+
+--------------------
+---- Animations ----
+--------------------
 
 -- Default curves and animations, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
 hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1},    {0.32, 1}    } })
@@ -161,6 +168,7 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        font_family = "CaskaydiaCove Nerd Font"
     },
 })
 
