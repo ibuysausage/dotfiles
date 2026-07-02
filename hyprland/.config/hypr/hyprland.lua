@@ -59,10 +59,6 @@ hl.config({
         layout = "dwindle",
     },
 
-    cursor = {
-        no_hardware_cursors = 1,
-    },
-
     decoration = {
         rounding       = 10,
         rounding_power = 5,
@@ -187,8 +183,8 @@ hl.config({
 
         follow_mouse = 1,
         accel_profile = "flat",
-        sensitivity = 0.5, -- -1.0 - 1.0, 0 means no modification.
-
+        sensitivity = 1, -- -1.0 - 1.0, 0 means no modification.
+        repeat_rate = 0,
         touchpad = {
             natural_scroll = true,
             disable_while_typing = false,
@@ -206,8 +202,9 @@ hl.gesture({
 -- Example per-device config
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
 hl.device({
-    name        = "epic-mouse-v1",
-    sensitivity = -0.5,
+    name        = "razer-razer-cobra-1",
+    sensitivity = 1,
+    accel_profile = "flat",
 })
 
 
