@@ -34,7 +34,6 @@ alias vi="vim"
 alias tree="tree -ah -I '.git'"
 alias update="paru -Syu"
 alias yeet='paru -Rcs'
-alias yay='paru'
 alias top='btop'
 alias htop='btop'
 alias omp='oh-my-posh'
