@@ -43,6 +43,8 @@ alias reload='clear; source ~/.zshrc'
 alias tree='eza -T --icons'
 alias swww='awww'
 alias kdiff='kitten diff'
+alias svim='sudo -e'
+alias lslm='eza -l -s modified --icons'
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"

@@ -955,7 +955,8 @@ mouse_hide_wait 4.0
 
 #: Terminal bell {{{
 
-# enable_audio_bell yes
+#enable_audio_bell no
+# enable bell lowkey not working
 
 #: The audio bell. Useful to disable it in environments that require
 #: silence.
@@ -1002,7 +1003,7 @@ mouse_hide_wait 4.0
 #: KITTY_CHILD_CMDLINE can be used to get the program running in the
 #: window in which the bell occurred.
 
-# bell_path none
+# bell_path ~/.config/kitty/uwu.mp3
 
 #: Path to a sound file to play as the bell sound. If set to none, the
 #: system default bell sound is used. Must be in a format supported by
@@ -1494,7 +1495,7 @@ background_opacity 0.8
 #: original config.
 # dynamic_background_opacity yes
 
-# background_blur 0
+background_blur 60
 
 #: Set to a positive value to enable background blur (blurring of the
 #: visuals behind a transparent window) on platforms that support it.
@@ -1927,7 +1928,7 @@ background_opacity 0.8
 #: special value of ask means that kitty will ask before opening the
 #: link when clicked.
 
-# shell_integration enabled
+shell_integration enabled
 
 #: Enable shell integration on supported shells. This enables features
 #: such as jumping to previous prompts, browsing the output of the
@@ -1970,7 +1971,7 @@ background_opacity 0.8
 #: This option must be a comma separated list of the above values.
 #: Only the first valid match, in the order specified, is sourced.
 
-# notify_on_cmd_finish never
+notify_on_cmd_finish always 5.0 notify-bell
 
 #: Show a desktop notification when a long-running command finishes
 #: (needs shell_integration). The possible values are:
@@ -2995,7 +2996,7 @@ kitty_mod ctrl+shift
 
 
 # BEGIN_KITTY_FONTS
-font_family      family="CaskaydiaCove Nerd Font"
+font_family      family="CaskaydiaCove Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
