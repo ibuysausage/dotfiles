@@ -45,6 +45,7 @@ alias swww='awww'
 alias kdiff='kitten diff'
 alias svim='sudo -e'
 alias lslm='eza -l -s modified --icons'
+alias fix-librewolf="sudo cp ~/.config/librewolf/backup/autoconfig.cfg /usr/lib/librewolf/ && sudo cp ~/.config/librewolf/backup/defaults/pref/autoconfig.js /usr/lib/librewolf/defaults/pref/"
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
